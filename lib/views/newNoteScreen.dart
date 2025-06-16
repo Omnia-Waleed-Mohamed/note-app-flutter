@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notes/controller/note_controller.dart';
 
-class NewNoteScreen extends StatelessWidget {
+class NewNoteScreen extends StatefulWidget {
   const NewNoteScreen({super.key});
 
   @override
+  State<NewNoteScreen> createState() => _NewNoteScreenState();
+}
+
+class _NewNoteScreenState extends State<NewNoteScreen> {
+  @override
+  final noteController = NoteController();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -39,8 +46,9 @@ class NewNoteScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
             child: FilledButton(
-              onPressed: () {
-                // Action
+              onPressed: ()async {
+                await noteController.saveNote();
+               Navigator.pop(context);
               },
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFF04332D),
@@ -67,41 +75,42 @@ class NewNoteScreen extends StatelessWidget {
           children: [
             
             TextField(
-              style: GoogleFonts.nunito(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Title',
-                hintStyle: GoogleFonts.nunito(
-                  color: const Color(0xFF9A9A9A),
-                  fontSize: 48,
-                ),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-              ),
-            ),
-            const SizedBox(height: 12),
-        
-            
-            TextField(
-              maxLines: null,
-              style: GoogleFonts.nunito(
-                fontSize: 18,
-                color: Colors.black,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Type something...',
-                hintStyle: GoogleFonts.nunito(
-                  color: const Color(0xFF9A9A9A),
-                  fontSize: 23,
-                ),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-              ),
-            ),
+  controller: noteController.titleController, // ✅ ربط الكنترولر
+  style: GoogleFonts.nunito(
+    fontSize: 20,
+    color: Colors.black,
+  ),
+  decoration: InputDecoration(
+    hintText: 'Title',
+    hintStyle: GoogleFonts.nunito(
+      color: const Color(0xFF9A9A9A),
+      fontSize: 48,
+    ),
+    border: InputBorder.none,
+    enabledBorder: InputBorder.none,
+    focusedBorder: InputBorder.none,
+  ),
+),
+const SizedBox(height: 12),
+
+TextField(
+  controller: noteController.descController, // ✅ ربط الكنترولر
+  maxLines: null,
+  style: GoogleFonts.nunito(
+    fontSize: 18,
+    color: Colors.black,
+  ),
+  decoration: InputDecoration(
+    hintText: 'Type something...',
+    hintStyle: GoogleFonts.nunito(
+      color: const Color(0xFF9A9A9A),
+      fontSize: 23,
+    ),
+    border: InputBorder.none,
+    enabledBorder: InputBorder.none,
+    focusedBorder: InputBorder.none,
+  ),
+),
           ],),
       )
     );
