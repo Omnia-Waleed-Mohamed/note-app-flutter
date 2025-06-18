@@ -13,17 +13,26 @@ class NoteController {
   }
 
   Future<void> saveNote() async {
-    final id = DateTime.now().millisecondsSinceEpoch;
+    final box = hiveService.box;
+    int maxId = 0;
+    if (box.isNotEmpty) {
+      final allNotes = box.values.toList();
+      maxId = allNotes
+          .map((note) => note.id)
+          .fold(0, (prev, next) => prev > next ? prev : next);
+    }
+
+    final newId = maxId + 1;
 
     final note = NoteModel(
-      id,
+      newId,
       titleController.text.trim(),
       descController.text.trim(),
       DateTime.now().toString(),
       false,
     );
 
-    await hiveService.addValue(id.toString(), note);
+    await box.add(note);
   }
 
   Future<void> updateNote(String key, NoteModel updatedNote) async {
@@ -38,12 +47,7 @@ class NoteController {
     return await hiveService.getValue(key);
   }
 
-  // Future<List<NoteModel>> getAllNotes() async {
-  //   final box = await hiveService.openBox();
-  //   return box.values.toList();
-  // }
   Future<List<NoteModel>> getAllNotes() async {
-  return hiveService.getAllValues();
-}
-
+    return hiveService.getAllValues();
+  }
 }
