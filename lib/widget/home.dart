@@ -22,7 +22,7 @@ class NotesGridWidget extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12),
           child: GridView.builder(
             itemCount: box.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -98,31 +98,32 @@ class NotesGridWidget extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Column(
+                        child: 
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 formattedDate,
                                 style: const TextStyle(
                                   color: Colors.white70,
-                                  fontSize: 8,
+                                  fontSize: 6,
                                 ),
                               ),
                               Text(
                                 formattedTime,
                                 style: const TextStyle(
                                   color: Colors.white70,
-                                  fontSize: 8,
+                                  fontSize: 6,
                                 ),
                               ),
                             ],
                           ),
-                        ),
+                         ),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              padding: EdgeInsets.zero,
+                              padding: EdgeInsets.only(left: 30),
                               constraints: const BoxConstraints(),
                               icon: const Icon(Icons.edit,
                                   size: 18, color: Colors.white),
@@ -143,7 +144,7 @@ class NotesGridWidget extends StatelessWidget {
                               },
                             ),
                             IconButton(
-                              padding: EdgeInsets.zero,
+                              padding: EdgeInsets.only(left: 13),
                               constraints: const BoxConstraints(),
                               icon: const Icon(Icons.delete,
                                   size: 18, color: Colors.white),
