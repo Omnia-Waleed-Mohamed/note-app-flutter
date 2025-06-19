@@ -1,21 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notes/controller/note_controller.dart';
-import 'package:notes/models/note_model.dart';
 
-class EditBottomSheet extends StatelessWidget {
+class DeleteBottomSheet extends StatelessWidget {
   final NoteController noteController;
   final BuildContext parentContext;
-
   final dynamic noteKey;
-  final NoteModel note;
 
-  const EditBottomSheet({
+  const DeleteBottomSheet({
     super.key,
     required this.noteController,
     required this.parentContext,
     required this.noteKey,
-    required this.note,
   });
 
   @override
@@ -29,23 +26,24 @@ class EditBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(height: 10),
           Row(
             children: [
-              const SizedBox(width: 18),
-              Expanded(
-                child: Text(
-                  'Are yor sure to save changes ?',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+              const SizedBox(width: 55),
+              Text(
+                'Are you sure to delete?',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.nunito(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
           const Divider(
-              thickness: 0.8, color: Color.fromARGB(255, 197, 197, 197)),
+            thickness: 0.8,
+            color: Color.fromARGB(255, 197, 197, 197),
+          ),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,25 +52,14 @@ class EditBottomSheet extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      if (noteController.titleController.text.isNotEmpty &&
-                          noteController.descController.text.isNotEmpty) {
-                        final updatedNote = NoteModel(
-                          note.id,
-                          noteController.titleController.text.trim(),
-                          noteController.descController.text.trim(),
-                          DateTime.now().toString(),
-                          false,
-                        );
-
-                        await noteController.updateNote(noteKey, updatedNote);
-                        Navigator.pop(context); // close sheet
-                        Navigator.pop(parentContext); // back to Home
-                      }
+                      await noteController.deleteNote(noteKey);
+                      Navigator.pop(context);       // close bottom sheet
+                     
                     },
                     icon: const Icon(Icons.check_circle_outline,
                         color: Color(0xff04332D)),
                   ),
-                  const Text('Save'),
+                  const Text('Delete'),
                 ],
               ),
               Column(
@@ -91,3 +78,4 @@ class EditBottomSheet extends StatelessWidget {
     );
   }
 }
+

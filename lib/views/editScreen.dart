@@ -60,8 +60,8 @@ class EditScreen extends StatelessWidget {
                   builder: (_) => EditBottomSheet(
                     noteController: noteController,
                     parentContext: context,
-                    noteKey: noteKey, // 👈 هنا
-                    note: note, // 👈 و الـ note نفسها
+                    noteKey: noteKey, 
+                    note: note, 
                   ),
                 );
               },

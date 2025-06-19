@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:notes/controller/note_controller.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/views/editScreen.dart';
+import 'package:notes/widget/deleteBottomSheet.dart';
 
 class NotesGridWidget extends StatelessWidget {
   final List<Color> noteColors;
@@ -29,14 +31,16 @@ class NotesGridWidget extends StatelessWidget {
               mainAxisSpacing: 12,
               childAspectRatio: 0.8,
             ),
+    
             itemBuilder: (context, index) {
               final note = box.getAt(index);
               if (note == null) return const SizedBox();
 
+              final noteKey = box.keyAt(index); 
+
               final dateTime = DateTime.tryParse(note.dataTime);
-              final formattedDate = dateTime != null
-                  ? DateFormat.yMMMMd().format(dateTime)
-                  : '';
+              final formattedDate =
+                  dateTime != null ? DateFormat.yMMMMd().format(dateTime) : '';
               final formattedTime =
                   dateTime != null ? DateFormat.Hm().format(dateTime) : '';
 
@@ -124,18 +128,19 @@ class NotesGridWidget extends StatelessWidget {
                                   size: 18, color: Colors.white),
                               onPressed: () {
                                 final note = box.getAt(index);
-final noteKey = box.keyAt(index); // 👈 المفتاح الصحيح (int)
+                                final noteKey =
+                                    box.keyAt(index); 
 
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => EditScreen(
-      note: note!,
-      noteKey: noteKey,
-    ),
-  ),
-);
-                              }, 
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditScreen(
+                                      note: note!,
+                                      noteKey: noteKey,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             IconButton(
                               padding: EdgeInsets.zero,
@@ -143,7 +148,19 @@ Navigator.push(
                               icon: const Icon(Icons.delete,
                                   size: 18, color: Colors.white),
                               onPressed: () {
-                                box.deleteAt(index);
+                                
+                                showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20)),
+                                  ),
+                                  builder: (_) => DeleteBottomSheet(
+                                    noteController: NoteController(),
+                                    parentContext: context,
+                                    noteKey: noteKey, 
+                                  ),
+                                );
                               },
                             ),
                           ],
