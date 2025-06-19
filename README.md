@@ -11,4 +11,7 @@ The interface is minimalistic and user-friendly, offering a smooth experience fo
 - **Modal Bottom Sheets** – for edit and delete actions  
 - **Google Fonts** – for enhanced typography
 
+## Demo of the application
+https://github.com/user-attachments/assets/7faaf4a8-f64d-4fb4-bae8-b7775111c584
+
 
