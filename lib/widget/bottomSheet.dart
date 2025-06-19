@@ -71,7 +71,7 @@ class NoteConfirmationBottomSheet extends StatelessWidget {
                       }
                     },
                     icon: const Icon(Icons.check_circle_outline,
-                        color: Colors.deepPurple),
+                        color: Color(0xff04332D)),
                   ),
                   const Text('Ok'),
                 ],

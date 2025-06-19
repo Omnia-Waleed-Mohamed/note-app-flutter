@@ -35,15 +35,15 @@ class NoteController {
     await box.add(note);
   }
 
-  Future<void> updateNote(String key, NoteModel updatedNote) async {
+  Future<void> updateNote(dynamic key, NoteModel updatedNote) async {
     await hiveService.updateValue(key, updatedNote);
   }
 
-  Future<void> deleteNote(String key) async {
+  Future<void> deleteNote(dynamic key) async {
     await hiveService.deleteValue(key);
   }
 
-  Future<NoteModel?> getNote(String key) async {
+  Future<NoteModel?> getNote(dynamic key) async {
     return await hiveService.getValue(key);
   }
 

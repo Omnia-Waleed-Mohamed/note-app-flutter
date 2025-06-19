@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:notes/models/note_model.dart';
+import 'package:notes/views/editScreen.dart';
 
 class NotesGridWidget extends StatelessWidget {
   final List<Color> noteColors;
@@ -122,8 +123,19 @@ class NotesGridWidget extends StatelessWidget {
                               icon: const Icon(Icons.edit,
                                   size: 18, color: Colors.white),
                               onPressed: () {
-                                // TODO: Navigate to Edit Note Screen
-                              },
+                                final note = box.getAt(index);
+final noteKey = box.keyAt(index); // 👈 المفتاح الصحيح (int)
+
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => EditScreen(
+      note: note!,
+      noteKey: noteKey,
+    ),
+  ),
+);
+                              }, 
                             ),
                             IconButton(
                               padding: EdgeInsets.zero,

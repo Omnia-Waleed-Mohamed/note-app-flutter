@@ -72,17 +72,17 @@ class HiveService<T> {
 
   Box<T> get box => Hive.box<T>(boxName);
 
-  Future<void> addValue(String key, T value) async {
+  Future<void> addValue(dynamic key, T value) async {
     await box.put(key, value);
   }
 
-  Future<bool> updateValue(String key, T value) async {
+  Future<bool> updateValue(dynamic key, T value) async {
     bool exists = box.containsKey(key);
     if (exists) await box.put(key, value);
     return exists;
   }
 
-  Future<bool> deleteValue(String key) async {
+  Future<bool> deleteValue(dynamic key) async {
     bool exists = box.containsKey(key);
     if (exists) await box.delete(key);
     return exists;
